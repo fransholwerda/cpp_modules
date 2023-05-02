@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/28 14:38:38 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/05/02 18:29:06 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	= phonebook
 SRC		= $(ROOT)main.cpp \
 		  $(ROOT)contact.cpp \
 		  $(ROOT)phonebook.cpp
-OBJ		= $(SRC:.c=.o)
+OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
 FLAGS	= -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address
@@ -23,7 +23,7 @@ CC		= c++
 
 all: $(NAME)
 
-%.o: %.c
+%.o: %.cpp
 	@$(CC) $(FLAGS) $(INCLUDE) -c -o $@ $<
 
 $(NAME): $(OBJ)

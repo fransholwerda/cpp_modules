@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 12:58:54 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/04/28 14:42:10 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/02 15:38:03 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class PhoneBook
 {
 private:
 	Contact	contacts[8];
-	size_t	amount;
+	size_t	contact_index;
 public:
 	PhoneBook();
 	~PhoneBook();

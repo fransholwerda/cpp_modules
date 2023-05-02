@@ -6,14 +6,14 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/04/28 12:35:47 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/05/02 18:34:48 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= megaphone
 SRC		= $(ROOT)megaphone.cpp
-OBJ		= $(SRC:.c=.o)
+OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
 FLAGS	= -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address
@@ -21,7 +21,7 @@ CC		= c++
 
 all: $(NAME)
 
-%.o: %.c
+%.o: %.cpp
 	@$(CC) $(FLAGS) $(INCLUDE) -c -o $@ $<
 
 $(NAME): $(OBJ)
