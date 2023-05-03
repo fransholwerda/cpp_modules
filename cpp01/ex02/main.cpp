@@ -5,35 +5,26 @@
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/03 12:31:51 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/03 16:07:22 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/05/03 16:07:05 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/05/03 17:00:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include "Zombie.hpp"
 
 int	main(void)
 {
-	Zombie	*zombie;
+	std::string	str = "HI THIS IS BRAIN";
+	std::string	*strPTR = &str;
+	std::string	&strREF = str;
 
-	std::cout << "Creating a zombie on the stack." << std::endl;
-	Zombie stackZombie("Stack Zombie");
-	stackZombie.announce();
+	std::cout << "Address of str: " << &str << std::endl;
+	std::cout << "Address of strPTR: " << strPTR << std::endl;
+	std::cout << "Address of strREF: " << &strREF << std::endl;
 	std::cout << std::endl;
-
-	std::cout << "Creating a zombie on the heap." << std::endl;
-	zombie = newZombie("Heap Zombie");
-	zombie->announce();
-	std::cout << "Destroying the heap zombie." << std::endl;
-	delete zombie;
-	std::cout << std::endl;
-
-	std::cout << "Creating a random zombie on the stack, this one is immediately destroyed." << std::endl;
-	randomChump("Random Stack Zombie");
-	std::cout << std::endl;
-
-	std::cout << "Exiting the program, it automatically destroys the Stack Zombie." << std::endl;
+	std::cout << "Value of str: " << str << std::endl;
+	std::cout << "Value of strPTR: " << *strPTR << std::endl;
+	std::cout << "Value of strREF: " << strREF << std::endl;
 	return (0);
 }
