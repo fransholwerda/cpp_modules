@@ -6,14 +6,14 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 12:58:54 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/02 15:38:03 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/03 12:29:30 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
 
-# include "contact.hpp"
+# include "Contact.hpp"
 
 class PhoneBook
 {

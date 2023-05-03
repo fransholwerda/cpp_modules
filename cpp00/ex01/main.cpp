@@ -6,13 +6,13 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:35:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/02 18:30:03 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/03 12:29:38 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include "phonebook.hpp"
+#include "PhoneBook.hpp"
 
 int main()
 {

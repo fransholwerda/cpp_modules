@@ -6,15 +6,15 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 12:56:41 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/02 18:38:29 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/03 12:29:26 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include "contact.hpp"
-#include "phonebook.hpp"
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
 
 PhoneBook::PhoneBook()
 {

@@ -6,15 +6,15 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/05/02 18:29:06 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/05/03 12:28:14 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= phonebook
 SRC		= $(ROOT)main.cpp \
-		  $(ROOT)contact.cpp \
-		  $(ROOT)phonebook.cpp
+		  $(ROOT)Contact.cpp \
+		  $(ROOT)Phonebook.cpp
 OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
