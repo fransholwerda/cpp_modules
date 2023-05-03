@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:35:40 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/03 12:29:38 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/03 12:32:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include "PhoneBook.hpp"
 
-int main()
+int main(void)
 {
 	PhoneBook phonebook;
 	std::string command;
