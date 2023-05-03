@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/28 14:13:41 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/03 12:29:45 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/03 12:36:08 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@
 #include "Contact.hpp"
 
 /* This is the constructor */
-Contact::Contact(){}
+Contact::Contact()
+{
+}
 
 /* This is the destructor */
-Contact::~Contact(){}
+Contact::~Contact()
+{
+}
 
 /* This function will ask for user input, validate it and return it*/
 std::string	user_input(std::string prompt)

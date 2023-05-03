@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/05/03 12:28:14 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/05/03 13:21:35 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 NAME	= phonebook
 SRC		= $(ROOT)main.cpp \
 		  $(ROOT)Contact.cpp \
-		  $(ROOT)Phonebook.cpp
+		  $(ROOT)PhoneBook.cpp
 OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
