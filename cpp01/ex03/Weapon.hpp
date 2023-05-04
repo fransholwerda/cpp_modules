@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 17:26:18 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/03 17:27:56 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/04 12:24:59 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ class Weapon
 private:
 	std::string	_type;
 public:
+	Weapon(std::string type);
 	Weapon();
 	~Weapon();
 	const std::string&	getType() const;
