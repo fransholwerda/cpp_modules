@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 12:31:51 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/03 16:07:22 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/22 14:15:00 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 #include <string>
 #include "Zombie.hpp"
 
+void	leaks(void)
+{
+	system("leaks -q Brainz");
+}
+
 int	main(void)
 {
 	Zombie	*zombie;
 
+	atexit(&leaks);
 	std::cout << "Creating a zombie on the stack." << std::endl;
 	Zombie stackZombie("Stack Zombie");
 	stackZombie.announce();

@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.cpp                                           :+:    :+:            */
+/*   Harl.hpp                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/03 13:41:44 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/22 14:14:01 by fholwerd      ########   odam.nl         */
+/*   Created: 2023/05/22 13:22:58 by fholwerd      #+#    #+#                 */
+/*   Updated: 2023/05/22 13:39:59 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "Zombie.hpp"
+#ifndef HARL_HPP
+# define HARL_HPP
 
-void	leaks(void)
-{
-	system("leaks -q HordeBrainz");
-}
+# include <string>
 
-int	main(void)
+class Harl
 {
-	atexit(&leaks);
-	Zombie *zombies = zombieHorde(5, "Zombie");
-	for (int i = 0; i < 5; i++)
-		zombies[i].announce();
-	delete [] zombies;
-	return (0);
-}
+private:
+	void	debug(void);
+	void	info(void);
+	void	warning(void);
+	void	error(void);
+public:
+	Harl(void);
+	~Harl(void);
+	void	complain(std::string level);
+};
+
+#endif
