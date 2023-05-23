@@ -6,45 +6,40 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 18:03:16 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/22 19:03:11 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/23 14:35:20 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <cmath>
+#include <stdexcept>
 #include "Fixed.hpp"
 
 Fixed::Fixed(void) : _value(0)
 {
-	std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed &src)
 {
-	std::cout << "Copy constructor called" << std::endl;
 	*this = src;
 }
 
 Fixed::Fixed(const int value)
 {
-	std::cout << "Int constructor called" << std::endl;
 	_value = value << _bits;
 }
 
 Fixed::Fixed(const float value)
 {
-	std::cout << "Float constructor called" << std::endl;
 	_value = roundf(value * (1 << _bits));
 }
 
 Fixed::~Fixed(void)
 {
-	std::cout << "Destructor called" << std::endl;
 }
 
 Fixed	&Fixed::operator=(const Fixed &rhs)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
 	_value = rhs.getRawBits();
 	return (*this);
 }
@@ -96,6 +91,8 @@ Fixed	Fixed::operator*(const Fixed &rhs) const
 
 Fixed	Fixed::operator/(const Fixed &rhs) const
 {
+	if (rhs.toFloat() == 0)
+		throw std::runtime_error("Division by zero exception");\
 	return (Fixed(toFloat() / rhs.toFloat()));
 }
 
