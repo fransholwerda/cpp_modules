@@ -6,15 +6,16 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/05/24 16:30:05 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/05/26 13:53:57 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-NAME	= ScavTrap
+NAME	= FragTrap
 SRC		= $(ROOT)main.cpp \
 		  $(ROOT)ClapTrap.cpp \
-		  $(ROOT)ScavTrap.cpp
+		  $(ROOT)ScavTrap.cpp \
+		  $(ROOT)FragTrap.cpp
 OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
