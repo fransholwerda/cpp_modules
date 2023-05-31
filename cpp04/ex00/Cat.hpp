@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 18:55:30 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/26 19:17:19 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/31 10:47:52 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Cat : public Animal
 
 		Cat				&operator=(const Cat &rhs);
 
-		virtual void	makeSound(void) const;
+		void	makeSound(void) const;
 };
 
 #endif

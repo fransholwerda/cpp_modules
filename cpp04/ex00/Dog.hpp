@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 19:14:59 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/26 19:17:22 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/31 10:47:56 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Dog : public Animal
 
 		Dog				&operator=(const Dog &rhs);
 
-		virtual void	makeSound(void) const;
+		void	makeSound(void) const;
 };
 
 #endif

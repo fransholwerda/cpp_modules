@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 18:42:19 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/26 18:42:52 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/31 12:33:09 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ANIMAL_HPP
 
 # include <iostream>
+# include "Brain.hpp"
 
 class Animal
 {
@@ -22,7 +23,7 @@ class Animal
 		Animal(const Animal &src);
 		virtual ~Animal(void);
 
-		Animal			&operator=(const Animal &rhs);
+		Animal	&operator=(const Animal &rhs);
 
 		virtual void	makeSound(void) const;
 		std::string		getType(void) const;

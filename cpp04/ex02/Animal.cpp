@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 18:50:35 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/31 12:56:14 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/31 13:02:41 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,6 @@ Animal&		Animal::operator=(const Animal &rhs)
 	if (this != &rhs)
 		this->_type = rhs.getType();
 	return (*this);
-}
-
-void		Animal::makeSound(void) const
-{
-	std::cout << "Animal sound" << std::endl;
-	return ;
 }
 
 std::string	Animal::getType(void) const

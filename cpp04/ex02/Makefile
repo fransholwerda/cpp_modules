@@ -6,12 +6,12 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/05/31 11:19:51 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/05/31 13:03:12 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-NAME	= Brain
+NAME	= Abstract
 SRC		= $(ROOT)main.cpp \
 			$(ROOT)Animal.cpp \
 			$(ROOT)Brain.cpp \

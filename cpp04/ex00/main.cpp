@@ -6,7 +6,7 @@
 /*   By: fholwerd <fholwerd@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 18:41:57 by fholwerd      #+#    #+#                 */
-/*   Updated: 2023/05/26 19:30:51 by fholwerd      ########   odam.nl         */
+/*   Updated: 2023/05/31 10:41:55 by fholwerd      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int main()
 
 	const WrongAnimal* wrongMeta = new WrongAnimal();
 	const WrongAnimal* wrongCat = new WrongCat();
+	std::cout << wrongMeta->getType() << " " << std::endl;
 	std::cout << wrongCat->getType() << " " << std::endl;
-	wrongCat->makeSound();
 	wrongMeta->makeSound();
+	wrongCat->makeSound();
 	delete wrongMeta;
 	delete wrongCat;
 
