@@ -6,21 +6,18 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/09/13 17:33:58 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/09/21 15:31:18 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 ROOT	= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-NAME	= execute
+NAME	= convert
 SRC		= $(ROOT)main.cpp \
-		  $(ROOT)AForm.cpp \
-		  $(ROOT)Bureaucrat.cpp \
-		  $(ROOT)ShrubberyCreationForm.cpp \
-		  $(ROOT)RobotomyRequestForm.cpp
+		  $(ROOT)ScalarConverter.cpp
 OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
-FLAGS	= -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address
+FLAGS	= -Wall -Wextra -Werror #-std=c++98 #-g -fsanitize=address
 CC		= c++
 
 all: $(NAME)
