@@ -63,15 +63,17 @@ void	Bureaucrat::signForm(AForm &aForm) const
 
 void	Bureaucrat::executeForm(AForm const &aForm) const
 {
-	try
-	{
-		aForm.execute(*this);
-		std::cout << this->_name << " executed " << aForm.getName() << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << this->_name << " couldn't execute " << aForm.getName() << " because " << e.what() << std::endl;
-	}
+	aForm.execute(*this);
+	std::cout << this->_name << " executed " << aForm.getName() << std::endl;
+	// try
+	// {
+	// 	aForm.execute(*this);
+	// 	std::cout << this->_name << " executed " << aForm.getName() << std::endl;
+	// }
+	// catch (std::exception &e)
+	// {
+	// 	std::cout << this->_name << " couldn't execute " << aForm.getName() << " because " << e.what() << std::endl;
+	// }
 }
 
 const char			*Bureaucrat::GradeTooHighException::what() const throw()

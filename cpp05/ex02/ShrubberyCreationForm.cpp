@@ -29,6 +29,8 @@ ShrubberyCreationForm	&ShrubberyCreationForm::operator=(ShrubberyCreationForm co
 
 void	ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
+	if (!this->isSigned())
+		throw AForm::NotSignedException();
 	if (executor.getGrade() > this->getGradeToExecute())
 		throw AForm::GradeTooLowException();
 

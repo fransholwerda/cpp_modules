@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2023/09/13 17:33:58 by fholwerd      ########   odam.nl          #
+#    Updated: 2023/09/26 14:37:49 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC		= $(ROOT)main.cpp \
 		  $(ROOT)AForm.cpp \
 		  $(ROOT)Bureaucrat.cpp \
 		  $(ROOT)ShrubberyCreationForm.cpp \
-		  $(ROOT)RobotomyRequestForm.cpp
+		  $(ROOT)RobotomyRequestForm.cpp \
+		  $(ROOT)PresidentialPardonForm.cpp
 OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
