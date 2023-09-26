@@ -5,10 +5,19 @@
 # include <string>
 # include <exception>
 
+enum e_type
+{
+	CHAR,
+	INT,
+	FLOAT,
+	DOUBLE
+};
+
 class ScalarConverter
 {
 	private:
 		std::string const	_input;
+		int					_type;
 		ScalarConverter();
 	public:
 		ScalarConverter(std::string const &input);
@@ -21,6 +30,11 @@ class ScalarConverter
 		void	printInt();
 		void	printFloat();
 		void	printDouble();
+		void	fromChar();
+		void	fromInt();
+		void	fromFloat();
+		void	fromDouble();
+		void	convert();
 
 		class ImpossibleException : public std::exception
 		{
