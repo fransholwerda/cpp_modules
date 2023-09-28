@@ -9,8 +9,14 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 
-	ScalarConverter	scalarConverter(argv[1]);
-
-	scalarConverter.convert();
+	try
+	{
+		ScalarConverter	scalarConverter(argv[1]);
+		scalarConverter.convert();
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	return (0);
 }

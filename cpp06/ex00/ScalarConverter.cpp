@@ -238,7 +238,7 @@ void	ScalarConverter::fromFloat()
 	catch (std::exception &e) {
 		std::cout << "int: " << e.what() << std::endl;
 	}
-	std::cout << "float: " << this->_input << "f" << std::endl;
+	std::cout << "float: " << this->_input << std::endl;
 	try {
 		printDouble();
 	}
@@ -275,18 +275,24 @@ void	ScalarConverter::convert()
 	switch (this->_type)
 	{
 		case CHAR:
+			std::cout << "CHAR!" << std::endl;
 			fromChar();
 			break ;
 		case INT:
+			std::cout << "INT!" << std::endl;
 			fromInt();
 			break ;
 		case FLOAT:
+			std::cout << "FLOAT!" << std::endl;
 			fromFloat();
 			break ;
 		case DOUBLE:
+			std::cout << "DOUBLE!" << std::endl;
 			fromDouble();
 			break ;
 		default:
+			std::cout << "DEFAULT!" << std::endl;
+			throw ImpossibleException();
 			break ;
 	}
 }
