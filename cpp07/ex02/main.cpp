@@ -8,6 +8,8 @@ int main(void)
 		Array<std::string> b(5);
 		Array<int> c;
 
+		std::cout << "Basic tests" << std::endl;
+
 		std::cout << "a.size() = " << a.size() << std::endl;
 		std::cout << "b.size() = " << b.size() << std::endl;
 		std::cout << "c.size() = " << c.size() << std::endl;
@@ -45,7 +47,41 @@ int main(void)
 			std::cout << e.what() << std::endl;
 		}
 
-		// PUT MORE TESTS HERE
+		try
+		{
+			std::cout << "\nTest 1: Create an empty Array of int" << std::endl;
+			Array<int> intArray;
+			std::cout << "intArray size: " << intArray.size() << std::endl; // Expected output: 0
+
+			std::cout << "\nTest 2: Create an Array of double with a size of 5" << std::endl;
+			Array<double> doubleArray(5);
+			std::cout << "doubleArray size: " << doubleArray.size() << std::endl; // Expected output: 5
+
+			std::cout << "\nTest 3: Access elements in the doubleArray" << std::endl;
+			doubleArray[0] = 3.14;
+			doubleArray[1] = 2.71;
+			std::cout << "doubleArray[0]: " << doubleArray[0] << std::endl; // Expected output: 3.14
+			std::cout << "doubleArray[1]: " << doubleArray[1] << std::endl; // Expected output: 2.71
+
+			std::cout << "\nTest 4: Assign one Array to another" << std::endl;
+			Array<double> anotherDoubleArray(3);
+			anotherDoubleArray = doubleArray;
+			std::cout << "anotherDoubleArray[0]: " << anotherDoubleArray[0] << std::endl; // Expected output: 3.14
+
+			std::cout << "\nTest 5: Modify an element through the copy" << std::endl;
+			anotherDoubleArray[0] = 42;
+			std::cout << "anotherDoubleArray[0]: " << anotherDoubleArray[0] << std::endl; // Expected output: 42
+			std::cout << "doubleArray[0]: " << doubleArray[0] << std::endl; // Expected output: 3.14
+
+			std::cout << "\nTest 6: Access out-of-bounds element (should throw an exception)" << std::endl;
+			std::cout << "Accessing out-of-bounds element: ";
+			std::cout << doubleArray[10] << std::endl; // This should throw an exception
+
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << "Exception caught: " << e.what() << std::endl;
+		}
 	}
 	return (0);
 }
