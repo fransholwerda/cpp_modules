@@ -7,7 +7,8 @@
 class BitCoinExchange
 {
 	private:
-		std::map<std::string, double> _btc;
+		std::map<std::string, double>	_btc;
+		std::string 					_earliestDate;
 		void	readData(const std::string &db_filename);
 		BitCoinExchange();
 	public:
@@ -17,6 +18,7 @@ class BitCoinExchange
 		BitCoinExchange &operator=(const BitCoinExchange &other);
 
 		double	getExchangeRate(const std::string &date);
+		void	feedInput(const std::string &filename);
 
 		class DatabaseException : public std::exception
 		{

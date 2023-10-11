@@ -58,11 +58,11 @@ bool isDayValid(const std::string &year, const std::string &month, const std::st
 
 bool isDateValid(const std::string &date)
 {
-	std::string day;
-	std::string month;
-	std::string year;
-	std::string temp;
-	size_t pos = date.find('-');
+	std::string	day;
+	std::string	month;
+	std::string	year;
+	std::string	temp;
+	size_t		pos = date.find('-');
 
 	if (pos == std::string::npos)
 		return (false);
@@ -78,12 +78,49 @@ bool isDateValid(const std::string &date)
 	return (false);
 }
 
+std::string decreaseDate(const std::string &date)
+{
+	int			day;
+	int			month;
+	int			year;
+	std::string	temp;
+	size_t		pos = date.find('-');
+
+	year = atoi(date.substr(0, pos).c_str());
+	temp = date.substr(pos + 1);
+	pos = temp.find('-');
+	month = atoi(temp.substr(0, pos).c_str());
+	day = atoi(temp.substr(pos + 1).c_str());
+	if (day > 1)
+		day--;
+	else if (month > 1)
+	{
+		month--;
+		day = 31;
+	}
+	else
+	{
+		year--;
+		month = 12;
+		day = 31;
+	}
+	std::string new_date = std::to_string(year) + "-";
+	if (month < 10)
+		new_date += "0";
+	new_date += std::to_string(month) + "-";
+	if (day < 10)
+		new_date += "0";
+	new_date += std::to_string(day);
+	return (new_date);
+}
+
 BitCoinExchange::BitCoinExchange()
 {
 }
 
 BitCoinExchange::BitCoinExchange(const std::string &db_filename)
 {
+	_earliestDate = "9999-99-99";
 	readData(db_filename);
 }
 
@@ -124,7 +161,90 @@ void	BitCoinExchange::readData(const std::string &db_filename)
 		std::string key = line.substr(0, pos);
 		if (!isDateValid(key))
 			throw DateException();
+		if (key < _earliestDate)
+			_earliestDate = key;
 		std::string value = line.substr(pos + 1);
 		_btc[key] = std::stod(value);
+	}
+}
+
+double	BitCoinExchange::getExchangeRate(const std::string &date)
+{
+	if (!isDateValid(date))
+	{
+		std::cout << "Invalid date, date must be in the format YYYY-MM-DD" << std::endl;
+		throw DateException();
+	}
+	if (date < _earliestDate)
+	{
+		std::cout << "Date is earlier than the earliest date in the database" << std::endl;
+		throw DateException();
+	}
+	if (_btc.find(date) != _btc.end())
+		return (_btc[date]);
+	std::string temp = date;
+	while (temp != _earliestDate)
+	{
+		temp = decreaseDate(temp);
+		if (_btc.find(temp) != _btc.end())
+			return (_btc[temp]);
+	}
+	throw DateException();
+}
+
+void	BitCoinExchange::feedInput(const std::string &filename)
+{
+	if (filename.empty())
+		throw FileException();
+
+	std::ifstream input(filename);
+	if (!input.is_open())
+	{
+		std::cout << "Error: could not open file" << std::endl;
+		throw FileException();
+	}
+
+	std::string line;
+	std::getline(input, line); // Skip the first line
+	while (std::getline(input, line))
+	{
+		size_t pos = line.find('|');
+		if (pos == std::string::npos)
+		{
+			std::cout << "Error: bad input => " << line << std::endl;
+			continue ;
+		}
+		std::string date = line.substr(0, pos - 1);
+		if (!isDateValid(date))
+		{
+			std::cout << "Error: bad input => " << line << std::endl;
+			continue ;
+		}
+		else if (date < _earliestDate)
+		{
+			std::cout << "Error: date is earlier than the earliest date in the database." << std::endl;
+			continue ;
+		}
+		std::string value = line.substr(pos + 1);
+		double btc = std::stod(value);
+		if (btc < 0)
+		{
+			std::cout << "Error: not a positive number." << std::endl;
+			continue ;
+		}
+		else if (btc > INT32_MAX || btc > 1000)
+		{
+			std::cout << "Error: too large a number." << std::endl;
+			continue ;
+		}
+		try
+		{
+			double exchange_rate = getExchangeRate(date);
+			std::cout << date << " => " << btc << " = " << btc * exchange_rate << std::endl;
+		}
+		catch (const std::exception &e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 }
