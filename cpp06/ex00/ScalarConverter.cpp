@@ -238,7 +238,12 @@ void	ScalarConverter::fromFloat()
 	catch (std::exception &e) {
 		std::cout << "int: " << e.what() << std::endl;
 	}
-	std::cout << "float: " << this->_input << std::endl;
+	try {
+		printFloat();
+	}
+	catch (std::exception &e) {
+		std::cout << "float: " << e.what() << std::endl;
+	}
 	try {
 		printDouble();
 	}
@@ -302,3 +307,14 @@ std::ostream	&operator<<(std::ostream &out, ScalarConverter const &scalarConvert
 	(void)scalarConverter;
 	return (out);
 }
+
+const char			*ScalarConverter::ImpossibleException::what() const throw()
+{
+	return("impossible");
+}
+
+const char			*ScalarConverter::NonDisplayableException::what() const throw()
+{
+	return("Non displayable");
+}
+

@@ -23,26 +23,17 @@ class BitCoinExchange
 		class DatabaseException : public std::exception
 		{
 			public:
-				const char	*what() const throw()
-				{
-					return ("Database exception");
-				}
+				const char	*what() const throw();
 		};
 		class FileException : public std::exception
 		{
 			public:
-				const char	*what() const throw()
-				{
-					return ("File exception");
-				}
+				const char	*what() const throw();
 		};
 		class DateException : public std::exception
 		{
 			public:
-				const char	*what() const throw()
-				{
-					return ("Date exception");
-				}
+				const char	*what() const throw();
 		};
 };
 

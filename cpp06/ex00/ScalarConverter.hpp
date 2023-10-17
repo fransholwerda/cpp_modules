@@ -39,18 +39,12 @@ class ScalarConverter
 		class ImpossibleException : public std::exception
 		{
 			public:
-				const char	*what() const throw()
-				{
-					return("impossible");
-				}
+				const char	*what() const throw();
 		};
 		class NonDisplayableException : public std::exception
 		{
 			public:
-				const char	*what() const throw()
-				{
-					return("Non displayable");
-				}
+				const char	*what() const throw();
 		};
 };
 

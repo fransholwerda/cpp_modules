@@ -248,3 +248,18 @@ void	BitCoinExchange::feedInput(const std::string &filename)
 		}
 	}
 }
+
+const char	*BitCoinExchange::DatabaseException::what() const throw()
+{
+	return ("Database exception");
+}
+
+const char	*BitCoinExchange::FileException::what() const throw()
+{
+	return ("File exception");
+}
+
+const char	*BitCoinExchange::DateException::what() const throw()
+{
+	return ("Date exception");
+}
