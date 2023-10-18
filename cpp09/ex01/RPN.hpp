@@ -4,6 +4,17 @@
 # include <iostream>
 # include <stack>
 
+enum e_operation
+{
+	ADD = 0,
+	SUB,
+	MUL,
+	DIV,
+	MOD,
+	SPACE,
+	DIGIT
+};
+
 class RPN
 {
 	private:
@@ -27,10 +38,12 @@ class RPN
 		class EmptyStackException: public std::exception
 		{
 			public:
-				const char	*what() const throw()
-				{
-					return ("Empty stack");
-				}
+				const char	*what() const throw();
+		};
+		class InvalidExpressionException: public std::exception
+		{
+			public:
+				const char	*what() const throw();
 		};
 };
 

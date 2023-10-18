@@ -1,5 +1,18 @@
 #include <iostream>
+#include <stack>
+#include <cmath>
 #include "RPN.hpp"
+
+int	eval_operation(char c)
+{
+	std::string	operations = "+-*/% ";
+	size_t		pos = operations.find(c);
+	if (pos != std::string::npos)
+		return (pos);
+	else if (c >= '0' && c <= '9')
+		return (DIGIT);
+	return (-1);
+}
 
 RPN::RPN()
 {
@@ -39,10 +52,11 @@ void	RPN::add()
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
 	int	a = this->_stackRPN.top();
-	this->_stackRPN.pop();
+	this->pop();
 	int	b = this->_stackRPN.top();
-	this->_stackRPN.pop();
-	this->_stackRPN.push(a + b);
+	this->pop();
+	this->push(b + a);
+	std::cout << b << " + " << a << " = " << b + a << std::endl;
 }
 
 void	RPN::sub()
@@ -50,10 +64,11 @@ void	RPN::sub()
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
 	int	a = this->_stackRPN.top();
-	this->_stackRPN.pop();
+	this->pop();
 	int	b = this->_stackRPN.top();
-	this->_stackRPN.pop();
-	this->_stackRPN.push(a - b);
+	this->pop();
+	this->push(b - a);
+	std::cout << b << " - " << a << " = " << b - a << std::endl;
 }
 
 void	RPN::mul()
@@ -61,10 +76,11 @@ void	RPN::mul()
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
 	int	a = this->_stackRPN.top();
-	this->_stackRPN.pop();
+	this->pop();
 	int	b = this->_stackRPN.top();
-	this->_stackRPN.pop();
-	this->_stackRPN.push(a * b);
+	this->pop();
+	this->push(b * a);
+	std::cout << b << " * " << a << " = " << b * a << std::endl;
 }
 
 void	RPN::div()
@@ -72,10 +88,11 @@ void	RPN::div()
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
 	int	a = this->_stackRPN.top();
-	this->_stackRPN.pop();
+	this->pop();
 	int	b = this->_stackRPN.top();
-	this->_stackRPN.pop();
-	this->_stackRPN.push(a / b);
+	this->pop();
+	this->push(b / a);
+	std::cout << b << " / " << a << " = " << b / a << std::endl;
 }
 
 void	RPN::mod()
@@ -83,10 +100,11 @@ void	RPN::mod()
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
 	int	a = this->_stackRPN.top();
-	this->_stackRPN.pop();
+	this->pop();
 	int	b = this->_stackRPN.top();
-	this->_stackRPN.pop();
-	this->_stackRPN.push(a % b);
+	this->pop();
+	this->push(b % a);
+	std::cout << b << " % " << a << " = " << b % a << std::endl;
 }
 
 void	RPN::calculate(const std::string &expression)
@@ -95,31 +113,31 @@ void	RPN::calculate(const std::string &expression)
 	std::string::const_iterator	ite = expression.end();
 	while (it != ite)
 	{
-		if (*it == ' ')
-			;
-		else if (*it == '+')
-			this->add();
-		else if (*it == '-')
-			this->sub();
-		else if (*it == '*')
-			this->mul();
-		else if (*it == '/')
-			this->div();
-		else if (*it == '%')
-			this->mod();
-		else if (*it >= '0' && *it <= '9')
+		switch (eval_operation(*it))
 		{
-			int	value;
-			while (it != ite && *it >= '0' && *it <= '9')
-			{
-				value = *it - '0';
-				++it;
-			}
-			this->push(value);
-			continue ;
+			case ADD:
+				this->add();
+				break;
+			case SUB:
+				this->sub();
+				break;
+			case MUL:
+				this->mul();
+				break;
+			case DIV:
+				this->div();
+				break;
+			case MOD:
+				this->mod();
+				break;
+			case SPACE:
+				break;
+			case DIGIT:
+				this->push(*it - '0');
+				break;
+			default:
+				throw RPN::InvalidExpressionException();
 		}
-		else
-			throw RPN::EmptyStackException();
 		++it;
 	}
 	this->print();
@@ -130,4 +148,14 @@ void	RPN::print()
 	if (this->_stackRPN.empty())
 		throw RPN::EmptyStackException();
 	std::cout << this->_stackRPN.top() << std::endl;
+}
+
+const char	*RPN::EmptyStackException::what() const throw()
+{
+	return ("Error: empty stack");
+}
+
+const char	*RPN::InvalidExpressionException::what() const throw()
+{
+	return ("Error: invalid expression");
 }
