@@ -2,6 +2,8 @@
 #include <string>
 #include <exception>
 #include <cmath>
+#include <string.h>
+#include <limits>
 #include "ScalarConverter.hpp"
 
 bool	all_digits(std::string input)
@@ -14,27 +16,53 @@ bool	all_digits(std::string input)
 	return (true);
 }
 
+std::string trimTrailingZeros(const std::string& input) {
+	size_t dotPosition = input.find_last_of('.');
+	size_t endPosition = input.find_last_not_of('0');
+
+	if (endPosition == std::string::npos || (dotPosition != std::string::npos && endPosition < dotPosition)) {
+		return input;
+	}
+
+	return input.substr(0, endPosition + 1);
+}
+
+
 bool	typeIsChar(std::string input)
 {
+	if (input.empty())
+		return (false);
 	if (input.length() == 1)
-		return (true);
+	{
+		char c = input.c_str()[0];
+		if (c >= 0 && c <= 127)
+			return (true);
+	}
 	return (false);
 }
 
 bool	typeIsInt(std::string input)
 {
-	if (input.empty())
+	if (input.empty() || (input[0] == '-' && input.size() == 1))
 		return (false);
-	else if (all_digits(input))
-		return (true);
-	return (false);
+	if (!((input.size() >= 2 && input[0] == '-' && all_digits(input.substr(1))) || all_digits(input)))
+		return (false);
+
+	try {
+		int number = std::stoi(input);
+		number = 0;
+	} catch (const std::invalid_argument& e) {
+		return (false);
+	} catch (const std::out_of_range& e) {
+		return (false);
+	}
+	return (true);
 }
 
 bool	typeIsFloat(std::string input)
 {
 	if (input.empty())
 		return (false);
-
 	if (input == "nanf" || input == "inff" || input == "+inff" || input == "-inff")
 		return (true);
 
@@ -84,237 +112,308 @@ bool	typeIsDouble(std::string input)
 	return (true);
 }
 
-ScalarConverter::ScalarConverter(std::string const &input) : _input(input)
+// ScalarConverter::ScalarConverter(std::string const &input) : _input(input)
+// {
+// 	if (typeIsInt(input))
+// 		this->_type = INT;
+// 	else if (typeIsChar(input))
+// 		this->_type = CHAR;
+// 	else if (typeIsFloat(input))
+// 		this->_type = FLOAT;
+// 	else if (typeIsDouble(input))
+// 		this->_type = DOUBLE;
+// 	else
+// 		throw ImpossibleException();
+// }
+
+// ScalarConverter::ScalarConverter(ScalarConverter const &other) : _input(other._input)
+// {
+// }
+
+// ScalarConverter::~ScalarConverter()
+// {
+// }
+
+// ScalarConverter	&ScalarConverter::operator=(ScalarConverter const &other)
+// {
+// 	if (this != &other)
+// 	{
+// 		this->_type = other._type;
+// 	}
+// 	return (*this);
+// }
+
+// void	ScalarConverter::printChar()
+// {
+// 	// Check if string input is a single character
+// 	if (this->_input.length() == 1 && !std::isdigit(this->_input[0]))
+// 	{
+// 		char	c = this->_input[0];
+// 		if (!isprint(c))
+// 			throw NonDisplayableException();
+// 		std::cout << "char: '" << c << "'" << std::endl;
+// 	} // Check if string input is a number
+// 	else if (all_digits(this->_input))
+// 	{
+// 		char	c = std::stoi(this->_input);
+// 		if (c < 32 || c > 126)
+// 			throw NonDisplayableException();
+// 		std::cout << "char: '" << c << "'" << std::endl;
+// 	}
+// 	else
+// 		throw ImpossibleException();
+// }
+
+// void	ScalarConverter::printInt()
+// {
+// 	try
+// 	{
+// 		int	i = std::stoi(this->_input);
+// 		std::cout << "int: " << i << std::endl;
+// 	}
+// 	catch(std::exception &e)
+// 	{
+// 		throw ImpossibleException();
+// 	}
+// }
+
+// void	ScalarConverter::printFloat()
+// {
+// 	try
+// 	{
+// 		float	f = std::stof(this->_input);
+// 		if (f - std::floor(f) < 0.000001 || f - std::floor(f) > 0.999999)
+// 			std::cout << "float: " << f << ".0f" << std::endl;
+// 		else
+// 			std::cout << "float: " << f << "f" << std::endl;
+// 	}
+// 	catch (std::exception &e)
+// 	{
+// 		throw ImpossibleException();
+// 	}
+// }
+
+// void	ScalarConverter::printDouble()
+// {
+// 	try
+// 	{
+// 		double	d = std::stod(this->_input);
+// 		if (d - std::floor(d) < 0.000001 || d - std::floor(d) > 0.999999)
+// 			std::cout << "double: " << d << ".0" << std::endl;
+// 		else
+// 			std::cout << "double: " << d << std::endl;
+// 	}
+// 	catch (std::exception &e)
+// 	{
+// 		throw ImpossibleException();
+// 	}
+// }
+
+void	fromChar(const std::string& input)
+{
+	char c = input[0];
+	if (isprint(c))
+		std::cout << "char: '" << c << "'" << std::endl;
+	else
+		std::cout << "char: Non displayable" << std::endl;
+
+	try	{
+		int toInt = static_cast<int>(c);
+		std::cout << "int: " << toInt << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "int: " << e.what() << std::endl;
+	}
+
+	try {
+		float toFloat = static_cast<float>(c);
+		std::cout << "float: " << toFloat << ".0f" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "float: " << e.what() << std::endl;
+	}
+
+	try {
+		double toDouble = static_cast<double>(c);
+		std::cout << "double: " << toDouble << ".0" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "double: " << e.what() << std::endl;
+	}
+}
+
+void	fromInt(const std::string& input)
+{
+	int toInt = std::stoi(input);
+	try	{
+		char c = static_cast<char>(toInt);
+		if (toInt > 127)
+			std::cout << "char: overflow" << std::endl;
+		else if (toInt < 0)
+			std::cout << "char: underflow" << std::endl;
+		else if (isprint(c))
+			std::cout << "char: '" << c << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "char: " << e.what() << std::endl;
+	}
+
+	std::cout << "int: " << toInt << std::endl;
+
+	try {
+		float toFloat = static_cast<float>(toInt);
+		std::cout << "float: " << toFloat << ".0f" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "float: " << e.what() << std::endl;
+	}
+
+	try {
+		double toDouble = static_cast<double>(toInt);
+		std::cout << "double: " << toDouble << ".0" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "double: " << e.what() << std::endl;
+	}
+}
+
+void	fromFloat(const std::string& input)
+{
+	float toFloat = std::stof(input);
+	try	{
+		char c = static_cast<char>(toFloat);
+		if (toFloat > 127)
+			std::cout << "char: overflow" << std::endl;
+		else if (toFloat < 0)
+			std::cout << "char: underflow" << std::endl;
+		else if (isprint(c))
+			std::cout << "char: '" << c << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "char: " << e.what() << std::endl;
+	}
+
+	try {
+		int toInt = static_cast<int>(toFloat);
+		if (toFloat > static_cast<float>(INT32_MAX))
+			std::cout << "int: overflow" << std::endl;
+		else if (toFloat < static_cast<float>(INT32_MIN))
+			std::cout << "int: underflow" << std::endl;
+		else
+			std::cout << "int: " << toInt << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "int: " << e.what() << std::endl;
+	}
+
+	std::string floatString = trimTrailingZeros(std::to_string(toFloat));
+	if (floatString.back() == '.')
+		std::cout << "float: " << floatString << "0f" << std::endl;
+	else
+		std::cout << "float: " << floatString << "f" << std::endl;
+
+	try {
+		double toDouble = static_cast<double>(toFloat);
+		std::string doubleString = trimTrailingZeros(std::to_string(toDouble));
+		if (doubleString.back() == '.')
+			std::cout << "double: " << doubleString << "0" << std::endl;
+		else
+			std::cout << "double: " << doubleString << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "double: " << e.what() << std::endl;
+	}
+}
+
+void fromDouble(const std::string& input)
+{
+	double toDouble = std::stof(input);
+	try	{
+		char c = static_cast<char>(toDouble);
+		if (toDouble > 127)
+			std::cout << "char: overflow" << std::endl;
+		else if (toDouble < 0)
+			std::cout << "char: underflow" << std::endl;
+		else if (isprint(c))
+			std::cout << "char: '" << c << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "char: " << e.what() << std::endl;
+	}
+
+	try {
+		int toInt = static_cast<int>(toDouble);
+		if (toDouble > static_cast<float>(INT32_MAX))
+			std::cout << "int: overflow" << std::endl;
+		else if (toDouble < static_cast<float>(INT32_MIN))
+			std::cout << "int: underflow" << std::endl;
+		else
+			std::cout << "int: " << toInt << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "int: " << e.what() << std::endl;
+	}
+
+	try {
+		float toFloat = static_cast<float>(toDouble);
+		std::string floatString = trimTrailingZeros(std::to_string(toFloat));
+		if (floatString.back() == '.')
+			std::cout << "float: " << floatString << "0f" << std::endl;
+		else
+			std::cout << "float: " << floatString << "f" << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << "float: " << e.what() << std::endl;
+	}
+
+	std::string doubleString = trimTrailingZeros(std::to_string(toDouble));
+	if (doubleString.back() == '.')
+		std::cout << "float: " << doubleString << "0" << std::endl;
+	else
+		std::cout << "float: " << doubleString << std::endl;
+}
+
+
+static int detect_type(const std::string& input)
 {
 	if (typeIsInt(input))
-		this->_type = INT;
+		return (INT);
 	else if (typeIsChar(input))
-		this->_type = CHAR;
+		return (CHAR);
 	else if (typeIsFloat(input))
-		this->_type = FLOAT;
+		return (FLOAT);
 	else if (typeIsDouble(input))
-		this->_type = DOUBLE;
-	else
-		throw ImpossibleException();
+		return (DOUBLE);
+	return (-1);
 }
 
-ScalarConverter::ScalarConverter(ScalarConverter const &other) : _input(other._input)
+void ScalarConverter::convert(const std::string& input)
 {
-}
-
-ScalarConverter::~ScalarConverter()
-{
-}
-
-ScalarConverter	&ScalarConverter::operator=(ScalarConverter const &other)
-{
-	if (this != &other)
+	int type = detect_type(input);
+	switch (type)
 	{
-		this->_type = other._type;
-	}
-	return (*this);
-}
-
-void	ScalarConverter::printChar()
-{
-	// Check if string input is a single character
-	if (this->_input.length() == 1 && !std::isdigit(this->_input[0]))
-	{
-		char	c = this->_input[0];
-		if (c < 32 || c > 126)
-			throw NonDisplayableException();
-		std::cout << "char: '" << c << "'" << std::endl;
-	} // Check if string input is a number
-	else if (all_digits(this->_input))
-	{
-		char	c = std::stoi(this->_input);
-		if (c < 32 || c > 126)
-			throw NonDisplayableException();
-		std::cout << "char: '" << c << "'" << std::endl;
-	}
-	else
-		throw ImpossibleException();
-}
-
-void	ScalarConverter::printInt()
-{
-	if (this->_input.length() == 1 && !std::isdigit(this->_input[0]))
-		std::cout << "int: " << static_cast<int>(this->_input[0]) << std::endl;
-	else if (all_digits(this->_input))
-		std::cout << "int: " << std::stoi(this->_input) << std::endl;
-	else
-		throw ImpossibleException();
-}
-
-void	ScalarConverter::printFloat()
-{
-	try
-	{
-		float	f = std::stof(this->_input);
-		if (f - std::floor(f) < 0.000001 || f - std::floor(f) > 0.999999)
-			std::cout << "float: " << f << ".0f" << std::endl;
-		else
-			std::cout << "float: " << f << "f" << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		throw ImpossibleException();
+	case -1:
+		std::cout << "Impossible" << std::endl;
+		break;
+	case CHAR:
+		fromChar(input);
+		break;
+	case INT:
+		fromInt(input);
+		break;
+	case FLOAT:
+		fromFloat(input);
+		break;
+	case DOUBLE:
+		fromDouble(input);
+		break;
+	default:
+		break;
 	}
 }
-
-void	ScalarConverter::printDouble()
-{
-	try
-	{
-		double	d = std::stod(this->_input);
-		if (d - std::floor(d) < 0.000001 || d - std::floor(d) > 0.999999)
-			std::cout << "double: " << d << ".0" << std::endl;
-		else
-			std::cout << "double: " << d << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		throw ImpossibleException();
-	}
-}
-
-void	ScalarConverter::fromChar()
-{
-	std::cout << "char: '" << this->_input[0] << "'" << std::endl;
-	try	{
-		printInt();
-	}
-	catch (std::exception &e) {
-		std::cout << "int: " << e.what() << std::endl;
-	}
-	try {
-		printFloat();
-	}
-	catch (std::exception &e) {
-		std::cout << "float: " << e.what() << std::endl;
-	}
-	try {
-		printDouble();
-	}
-	catch (std::exception &e) {
-		std::cout << "double: " << e.what() << std::endl;
-	}
-}
-
-void	ScalarConverter::fromInt()
-{
-	try {
-		printChar();
-	}
-	catch (std::exception &e) {
-		std::cout << "char: " << e.what() << std::endl;
-	}
-	std::cout << "int: " << this->_input << std::endl;
-	try {
-		printFloat();
-	}
-	catch (std::exception &e) {
-		std::cout << "float: " << e.what() << std::endl;
-	}
-	try {
-		printDouble();
-	}
-	catch (std::exception &e) {
-		std::cout << "double: " << e.what() << std::endl;
-	}
-}
-
-void	ScalarConverter::fromFloat()
-{
-	try {
-		printChar();
-	}
-	catch (std::exception &e) {
-		std::cout << "char: " << e.what() << std::endl;
-	}
-	try {
-		printInt();
-	}
-	catch (std::exception &e) {
-		std::cout << "int: " << e.what() << std::endl;
-	}
-	try {
-		printFloat();
-	}
-	catch (std::exception &e) {
-		std::cout << "float: " << e.what() << std::endl;
-	}
-	try {
-		printDouble();
-	}
-	catch (std::exception &e) {
-		std::cout << "double: " << e.what() << std::endl;
-	}
-}
-
-void	ScalarConverter::fromDouble()
-{
-	try {
-		printChar();
-	}
-	catch (std::exception &e) {
-		std::cout << "char: " << e.what() << std::endl;
-	}
-	try {
-		printInt();
-	}
-	catch (std::exception &e) {
-		std::cout << "int: " << e.what() << std::endl;
-	}
-	try {
-		printFloat();
-	}
-	catch (std::exception &e) {
-		std::cout << "float: " << e.what() << std::endl;
-	}
-	std::cout << "double: " << this->_input << std::endl;
-}
-
-void	ScalarConverter::convert()
-{
-	switch (this->_type)
-	{
-		case CHAR:
-			std::cout << "CHAR!" << std::endl;
-			fromChar();
-			break ;
-		case INT:
-			std::cout << "INT!" << std::endl;
-			fromInt();
-			break ;
-		case FLOAT:
-			std::cout << "FLOAT!" << std::endl;
-			fromFloat();
-			break ;
-		case DOUBLE:
-			std::cout << "DOUBLE!" << std::endl;
-			fromDouble();
-			break ;
-		default:
-			std::cout << "DEFAULT!" << std::endl;
-			throw ImpossibleException();
-			break ;
-	}
-}
-
-std::ostream	&operator<<(std::ostream &out, ScalarConverter const &scalarConverter)
-{
-	(void)scalarConverter;
-	return (out);
-}
-
-const char			*ScalarConverter::ImpossibleException::what() const throw()
-{
-	return("impossible");
-}
-
-const char			*ScalarConverter::NonDisplayableException::what() const throw()
-{
-	return("Non displayable");
-}
-
