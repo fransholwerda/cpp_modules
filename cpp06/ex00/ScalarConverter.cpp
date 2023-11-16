@@ -299,9 +299,9 @@ void	fromFloat(const std::string& input)
 
 	try {
 		int toInt = static_cast<int>(toFloat);
-		if (toFloat > static_cast<float>(INT32_MAX))
+		if (toFloat > static_cast<float>(INT32_MAX) || (toInt < 0 && toFloat > 0.0f))
 			std::cout << "int: overflow" << std::endl;
-		else if (toFloat < static_cast<float>(INT32_MIN))
+		else if (toFloat < static_cast<float>(INT32_MIN) || (toInt > 0 && toFloat < 0.0f))
 			std::cout << "int: underflow" << std::endl;
 		else
 			std::cout << "int: " << toInt << std::endl;
@@ -349,9 +349,9 @@ void fromDouble(const std::string& input)
 
 	try {
 		int toInt = static_cast<int>(toDouble);
-		if (toDouble > static_cast<float>(INT32_MAX))
+		if (toDouble > static_cast<double>(INT32_MAX) || (toInt < 0 && toDouble > 0.0))
 			std::cout << "int: overflow" << std::endl;
-		else if (toDouble < static_cast<float>(INT32_MIN))
+		else if (toDouble < static_cast<double>(INT32_MIN) || (toInt > 0 && toDouble < 0.0))
 			std::cout << "int: underflow" << std::endl;
 		else
 			std::cout << "int: " << toInt << std::endl;
@@ -374,9 +374,9 @@ void fromDouble(const std::string& input)
 
 	std::string doubleString = trimTrailingZeros(std::to_string(toDouble));
 	if (doubleString.back() == '.')
-		std::cout << "float: " << doubleString << "0" << std::endl;
+		std::cout << "double: " << doubleString << "0" << std::endl;
 	else
-		std::cout << "float: " << doubleString << std::endl;
+		std::cout << "double: " << doubleString << std::endl;
 }
 
 
