@@ -35,5 +35,55 @@ int main()
 		sp4.addNumber(rand());
 	std::cout << sp4.shortestSpan() << std::endl;
 	std::cout << sp4.longestSpan() << std::endl;
+
+	std::cout << "\nTest with empty span" << std::endl;
+	Span sp5 = Span(0);
+	try
+	{
+		std::cout << sp5.shortestSpan() << std::endl;
+		std::cout << sp5.longestSpan() << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << "\nTest with span with one element" << std::endl;
+	Span sp6 = Span(1);
+	sp6.addNumber(42);
+	try
+	{
+		std::cout << sp6.shortestSpan() << std::endl;
+		std::cout << sp6.longestSpan() << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << "\nTest with span that could hold two, but has none" << std::endl;
+	Span sp7 = Span(2);
+	try
+	{
+		std::cout << sp7.shortestSpan() << std::endl;
+		std::cout << sp7.longestSpan() << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << "\nTest that attempts to add a number to a span that is full" << std::endl;
+	Span sp8 = Span(2);
+	try
+	{
+		sp.addNumber(1);
+		sp.addNumber(2);
+		sp.addNumber(3);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	return (0);
 }
