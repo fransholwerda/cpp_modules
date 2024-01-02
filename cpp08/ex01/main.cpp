@@ -1,10 +1,11 @@
 #include <iostream>
 #include <limits>
+#include <vector>
 #include "Span.hpp"
 
 int main()
 {
-	srand(time(NULL));
+	std::srand(time(NULL));
 
 	std::cout << "Test from the subject" << std::endl;
 	Span sp = Span(5);
@@ -85,5 +86,13 @@ int main()
 	{
 		std::cout << e.what() << std::endl;
 	}
+
+	std::cout << "\nTest that adds numbers to a span using a range of iterators" << std::endl;
+	Span sp9 = Span(1000);
+	std::vector<int> v(1000);
+	std::generate(v.begin(), v.end(), std::rand);
+	sp9.addNumber(v.begin(), v.end());
+	std::cout << sp9.shortestSpan() << std::endl;
+	std::cout << sp9.longestSpan() << std::endl;
 	return (0);
 }
