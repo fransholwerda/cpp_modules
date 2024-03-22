@@ -5,6 +5,7 @@
 # include <vector>
 # include <set>
 
+template <class T>
 class PmergeMe
 {
 	private:
