@@ -121,18 +121,23 @@ std::vector<int> vec_create_seq(std::vector<std::vector<int>> split_vec, bool st
 	std::cout << "-BEFORE-" << std::endl;
 	for (int number : sequence)
 		std::cout << number << ",";
+	std::cout << "\n-------" << std::endl;
+	std::cout << "-PENDING-" << std::endl;
+	for (int number : pending)
+		std::cout << number << ",";
 
-	sequence.insert(sequence.begin(), pending[0]);
-	std::cout << "\n-AFTER-" << std::endl;
+	if (pending.size() > 1)
+		sequence.insert(sequence.begin(), pending[0]);
+	std::cout << "\n\n-AFTER-" << std::endl;
 	for (int number : sequence)
 		std::cout << number << ",";
 	std::cout << "\n-------" << std::endl;
-	std::cout << "\n-PENDING-" << std::endl;
+	std::cout << "-PENDING-" << std::endl;
 	for (int number : pending)
 		std::cout << number << ",";
 	std::cout << "\n-------" << std::endl;
 
-	size_t				iterator = 0;
+	size_t				iterator = 1;
 	size_t				jacobindex = 3;
 	int					item;
 	std::vector<size_t>	indexSequence {1};
@@ -165,6 +170,7 @@ std::vector<int> vec_create_seq(std::vector<std::vector<int>> split_vec, bool st
 			}
 			else
 				item = pending[pending.size() - 1];
+			std::cout << "iterator: " << iterator << std::endl;
 			indexSequence.push_back(iterator);
 			last = "not-jacob";
 		}
@@ -225,7 +231,7 @@ int main(int argc, char *argv[])
 
 	if (argc < 3)
 	{
-		std::cout << "Give at least 2 unique integers." << std::endl;
+		std::cout << "Provide at least 2 unique integers." << std::endl;
 		return (EXIT_FAILURE);
 	}
 
