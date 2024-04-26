@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2024/03/12 15:08:18 by fholwerd      ########   odam.nl          #
+#    Updated: 2024/04/26 13:18:00 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC		= $(ROOT)main.cpp
 OBJ		= $(SRC:.cpp=.o)
 INCLUDE	= 
 LINKS	= 
-FLAGS	= -Wall -Wextra -Werror -g -fsanitize=address #-std=c++98
+FLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 CC		= c++
 
 all: $(NAME)
