@@ -6,7 +6,7 @@
 #    By: fholwerd <fholwerd@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/23 18:54:37 by fholwerd      #+#    #+#                  #
-#    Updated: 2024/04/26 13:17:44 by fholwerd      ########   odam.nl          #
+#    Updated: 2024/10/17 16:40:48 by fholwerd      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,9 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+debug: FLAGS += -DDEBUG
+debug: re
 
 .PHONY: all libs clean fclean re
 
