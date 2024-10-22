@@ -6,8 +6,9 @@
 #include <chrono>
 #include <set>
 
-size_t g_comparisons = 0;
+int g_comparisons = 0;
 
+// Jacobsthal sequence
 size_t jacobsthal(size_t n)
 {
 	if ( n <= 1)
@@ -15,170 +16,102 @@ size_t jacobsthal(size_t n)
 	return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
 }
 
-void vec_pair_sort(std::vector<int>& arr)
+// Returns true if a > b, else false
+bool compare(const int& a, const int& b)
 {
-	for (size_t i = 1; i < arr.size(); i += 2)
-	{
-		++g_comparisons;
-		if (arr[i - 1] > arr[i])
-		{
-			int temp = arr[i - 1];
-			arr[i - 1] = arr[i];
-			arr[i] = temp;
-		}
-	}
+	++g_comparisons;
+	return (a > b);
 }
 
-int vec_binary_search(std::vector<int>& arr, int item)
+// Returns a combined array of array a and b (in that order)
+std::vector<int> vec_merge(std::vector<int> a, const std::vector<int> b)
 {
-	int left = 0;
-	int right = arr.size();
+	for (int i : b)
+		a.push_back(i);
+	return (a);
+}
 
-	while (left < right)
+// Returns the first half of the given array
+std::vector<int> vec_split_arr_first_half(const std::vector<int>& arr)
+{
+	std::vector<int> result;
+
+	for (size_t i = 0; i < arr.size() / 2; ++i)
+		result.push_back(arr[i]);
+
+	return (result);
+}
+
+// Returns the second half of the given array
+std::vector<int> vec_split_arr_second_half(const std::vector<int>& arr)
+{
+	std::vector<int> result;
+
+	for (size_t i = 0; i < arr.size() / 2; ++i)
+		result.push_back(arr[i]);
+
+	return (result);
+}
+
+void insertion_sort(std::vector<std::vector<int>>& sort_from, std::vector<std::vector<int>>& sort_to, std::vector<int> straggler = {})
+{
+
+}
+
+// Recursively pairs up the given array using merge insertion sort
+std::vector<std::vector<int>> vec_merge_insertion(std::vector<std::vector<int>> paired_arr)
+{
+	std::vector<std::vector<int>> deeper_paired_arr;
+
+	for (size_t i = 0; i + 1 < paired_arr.size(); i += 2)
 	{
-		int mid = (left + right) / 2;
-
-		++g_comparisons;
-		if (arr[mid] < item)
-			left = mid + 1;
+		if (compare(paired_arr[i][0], paired_arr[i + 1][0]))
+			deeper_paired_arr.push_back(vec_merge(paired_arr[i], paired_arr[i + 1]));
 		else
-			right = mid;
+			deeper_paired_arr.push_back(vec_merge(paired_arr[i + 1], paired_arr[i]));
 	}
 
-	return (left);
-}
-
-int findInsertPosition(const std::vector<int>& arr, int new_num, int end_index) {
-	int low = 0, high = end_index;
-
-	while (low <= high) {
-		int mid = low + (high - low) / 2;
-		++g_comparisons;
-		if (arr[mid] < new_num) {
-			low = mid + 1;
-		} else {
-			high = mid - 1;
-		}
-	}
-
-	return low;
-}
-
-void vec_blabla(std::vector<int>& arr, std::vector<int>& a_arr, std::vector<int>& b_arr)
-{
-	for (size_t i = 1; i < arr.size(); i += 2)
-	{
-		int num = arr[i];
-		int pos = vec_binary_search(a_arr, num);
-		a_arr.insert(a_arr.begin() + pos, num);
-		b_arr.push_back(arr[i - 1]);
-	}
-	if (arr.size() % 2 == 1)
-		b_arr.push_back(arr[arr.size() - 1]);
-	a_arr.insert(a_arr.begin() + 0, b_arr[0]);
-
+	if (deeper_paired_arr.size() > 1)
+		deeper_paired_arr = vec_merge_insertion(deeper_paired_arr);
+	
 	#ifdef DEBUG
-	std::cout << "a_array: ";
-	for (int i : a_arr)
-		std::cout << i << " ";
-	std::cout << std::endl;
-
-	std::cout << "b_array: ";
-	for (int i : b_arr)
-		std::cout << i << " ";
+	std::cout << "S(" << paired_arr.size() << ")" << std::endl;
+	std::cout << "comparisons: " << g_comparisons << std::endl;
+	for (auto i : paired_arr)
+	{
+		std::cout << "{";
+		for (auto j : i)
+			std::cout << j << " ";
+		std::cout << "}";
+	}
 	std::cout << std::endl;
 	#endif
+
+	std::vector<std::vector<int>> result;
+
+	result.push_back(vec_split_arr_first_half(deeper_paired_arr[0]));
+	result.push_back(vec_split_arr_second_half(deeper_paired_arr[0]));
+
+	if (paired_arr.size() % 2 != 0)
+		insertion_sort(deeper_paired_arr, result, paired_arr.back());
+	else
+		insertion_sort(deeper_paired_arr, result);
+
+	return (result);
 }
 
-void merge(std::vector<int>& arr, int left, int mid, int right) {
-	std::vector<int> leftArr(arr.begin() + left, arr.begin() + mid + 1);
-	std::vector<int> rightArr(arr.begin() + mid + 1, arr.begin() + right + 1);
-
-	size_t i = 0;
-	size_t j = 0;
-	size_t k = left;
-
-	while (i < leftArr.size() && j < rightArr.size()) {
-		++g_comparisons;
-		if (leftArr[i] <= rightArr[j]) {
-			arr[k++] = leftArr[i++];
-		} else {
-			arr[k++] = rightArr[j++];
-		}
-	}
-
-	while (i < leftArr.size()) {
-		arr[k++] = leftArr[i++];
-	}
-
-	while (j < rightArr.size()) {
-		arr[k++] = rightArr[j++];
-	}
-}
-
-void vec_jacob(std::vector<int>& a_arr, std::vector<int>& b_arr, int final_len)
-{
-	int prev_jacob = 1;
-	int cur_jacob = 3;
-	int jacob_cursor = 3;
-	int main_chain_len = 3;
-
-	while (main_chain_len < final_len)
-	{
-		int reference_index = main_chain_len - 1;
-		int cursor = cur_jacob - 1;
-		while (cursor > prev_jacob - 1)
-		{
-			int num = b_arr[cursor];
-			if (main_chain_len <= 5)
-				merge(a_arr, 0, reference_index / 2, reference_index);
-			else
-			{
-				int pos = findInsertPosition(a_arr, num, reference_index);
-				if (pos <= reference_index)
-					++reference_index;
-				a_arr.insert(a_arr.begin() + pos, num);
-			}
-			#ifdef DEBUG
-			std::cout << "comparisons: " << g_comparisons << ", prev_jacob-cur_jacob: " << prev_jacob << "-" << cur_jacob << ", cursor: " << cursor << ", main_chain_len: " << main_chain_len << std::endl;
-			#endif
-			++main_chain_len;
-			--cursor;
-		}
-		main_chain_len += (cur_jacob - prev_jacob);
-		prev_jacob = cur_jacob;
-		++jacob_cursor;
-		cur_jacob = jacobsthal(jacob_cursor);
-	}
-}
-
+// Prepares the array so it can be recursively sorted by merge insertion
 std::vector<int> vec_fjmi(std::vector<int> arr)
 {
-	std::vector<int> a_arr;
-	std::vector<int> b_arr;
+	std::vector<std::vector<int>> paired_arr;
+	std::vector<int> result;
 
-	vec_pair_sort(arr);
+	for (size_t i = 0; i + 1 < arr.size(); i += 1)
+		paired_arr.push_back(std::vector<int>{arr[i]});
 
-	#ifdef DEBUG
-	std::cout << "comparisons: " << g_comparisons << std::endl;
-	#endif
-
-	vec_blabla(arr, a_arr, b_arr);
-
-	#ifdef DEBUG
-	std::cout << "comparisons: " << g_comparisons << std::endl;
-	#endif
-
-	vec_jacob(a_arr, b_arr, arr.size());
-
-	#ifdef DEBUG
-	std::cout << "a_array: ";
-	for (int i : a_arr)
-		std::cout << i << " ";
-	std::cout << std::endl;
-	#endif
-
-	return (a_arr);
+	paired_arr =  vec_merge_insertion(paired_arr);
+	
+	return (result);
 }
 
 int main(int argc, char *argv[])
@@ -207,7 +140,7 @@ int main(int argc, char *argv[])
 	}
 
 	std::cout << "Before: ";
-	if (vec.size() <= 5)
+	if (vec.size() <= 50)
 	{
 		for (size_t i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << " ";
@@ -226,12 +159,12 @@ int main(int argc, char *argv[])
 	std::chrono::duration<double, std::micro> vec_elapsed = end - start;
 
 	start = std::chrono::high_resolution_clock::now();
-	// deq = deq_merge_insertion_sort(deq);
+	// deq = ford_johnson<std::deque, int, int>(deq);
 	end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double, std::micro> deq_elapsed = end - start;
 
 	std::cout << "After: ";
-	if (vec.size() <= 5)
+	if (vec.size() <= 50)
 	{
 		for (size_t i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << " ";
