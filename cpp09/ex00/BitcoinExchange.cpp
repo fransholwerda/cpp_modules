@@ -227,12 +227,12 @@ void	BitCoinExchange::feedInput(const std::string &filename)
 		}
 		std::string value = line.substr(pos + 1);
 		double btc = std::stod(value);
-		if (btc < 0)
+		if (btc <= 0)
 		{
 			std::cout << "Error: not a positive number." << std::endl;
 			continue ;
 		}
-		else if (btc > INT32_MAX || btc > 1000)
+		else if (btc > INT32_MAX || btc >= 1000)
 		{
 			std::cout << "Error: too large a number." << std::endl;
 			continue ;
