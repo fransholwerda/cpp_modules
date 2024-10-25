@@ -18,6 +18,11 @@ bool isMonthValid(const std::string &month)
 {
 	if (month.size() != 2)
 		return (false);
+	for (size_t i = 0; i < month.size(); i++)
+	{
+		if (!std::isdigit(month[i]))
+			return (false);
+	}
 	if (month[0] != '0' && month[0] != '1')
 		return (false);
 	if (month[0] == '0' && month[1] == '0')
@@ -33,8 +38,15 @@ bool isDayValid(const std::string &year, const std::string &month, const std::st
 	int m = std::stoi(month);
 	int d = std::stoi(day);
 
-	if (d < 1 || d > 31)
+	if (d < 1 || d > 31 || m < 1 || m > 12 || y < 0 || y > 9999)
 		return (false);
+	if (day.size() != 2)
+		return (false);
+	for (size_t i = 0; i < day.size(); i++)
+	{
+		if (!std::isdigit(day[i]))
+			return (false);
+	}
 	if (m == 2)
 	{
 		if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0))
