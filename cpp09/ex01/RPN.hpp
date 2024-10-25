@@ -18,14 +18,14 @@ enum e_operation
 class RPN
 {
 	private:
-		std::stack<int>	_stackRPN;
+		std::stack<long>	_stackRPN;
 	public:
 		RPN();
 		RPN(const RPN &copy);
 		~RPN();
 		RPN	&operator=(const RPN &copy);
 
-		void	push(int value);
+		void	push(long value);
 		void	pop();
 		void	add();
 		void	sub();
@@ -46,6 +46,21 @@ class RPN
 				const char	*what() const throw();
 		};
 		class DivideByZeroException: public std::exception
+		{
+			public:
+				const char	*what() const throw();
+		};
+		class IncompleteExpressionException: public std::exception
+		{
+			public:
+				const char	*what() const throw();
+		};
+		class UnderflowException: public std::exception
+		{
+			public:
+				const char	*what() const throw();
+		};
+		class OverflowException: public std::exception
 		{
 			public:
 				const char	*what() const throw();

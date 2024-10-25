@@ -35,8 +35,12 @@ RPN	&RPN::operator=(const RPN &copy)
 	return (*this);
 }
 
-void	RPN::push(int value)
+void	RPN::push(long value)
 {
+	if (value > INT32_MAX)
+		throw (RPN::OverflowException());
+	else if (value < INT32_MIN)
+		throw (RPN::UnderflowException());
 	this->_stackRPN.push(value);
 }
 
@@ -51,9 +55,9 @@ void	RPN::add()
 {
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
-	int	a = this->_stackRPN.top();
+	long	a = this->_stackRPN.top();
 	this->pop();
-	int	b = this->_stackRPN.top();
+	long	b = this->_stackRPN.top();
 	this->pop();
 	this->push(b + a);
 	std::cout << b << " + " << a << " = " << b + a << std::endl;
@@ -63,9 +67,9 @@ void	RPN::sub()
 {
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
-	int	a = this->_stackRPN.top();
+	long	a = this->_stackRPN.top();
 	this->pop();
-	int	b = this->_stackRPN.top();
+	long	b = this->_stackRPN.top();
 	this->pop();
 	this->push(b - a);
 	std::cout << b << " - " << a << " = " << b - a << std::endl;
@@ -75,9 +79,9 @@ void	RPN::mul()
 {
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
-	int	a = this->_stackRPN.top();
+	long	a = this->_stackRPN.top();
 	this->pop();
-	int	b = this->_stackRPN.top();
+	long	b = this->_stackRPN.top();
 	this->pop();
 	this->push(b * a);
 	std::cout << b << " * " << a << " = " << b * a << std::endl;
@@ -87,11 +91,11 @@ void	RPN::div()
 {
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
-	int	a = this->_stackRPN.top();
+	long	a = this->_stackRPN.top();
 	if (a == 0)
 		throw RPN::DivideByZeroException();
 	this->pop();
-	int	b = this->_stackRPN.top();
+	long	b = this->_stackRPN.top();
 	this->pop();
 	this->push(b / a);
 	std::cout << b << " / " << a << " = " << b / a << std::endl;
@@ -101,9 +105,9 @@ void	RPN::mod()
 {
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
-	int	a = this->_stackRPN.top();
+	long	a = this->_stackRPN.top();
 	this->pop();
-	int	b = this->_stackRPN.top();
+	long	b = this->_stackRPN.top();
 	this->pop();
 	this->push(b % a);
 	std::cout << b << " % " << a << " = " << b % a << std::endl;
@@ -149,6 +153,8 @@ void	RPN::print()
 {
 	if (this->_stackRPN.empty())
 		throw RPN::EmptyStackException();
+	if (this->_stackRPN.size() > 1)
+		throw RPN::IncompleteExpressionException();
 	std::cout << this->_stackRPN.top() << std::endl;
 }
 
@@ -165,4 +171,19 @@ const char	*RPN::InvalidExpressionException::what() const throw()
 const char	*RPN::DivideByZeroException::what() const throw()
 {
 	return ("Error: can't divide by zero");
+}
+
+const char	*RPN::IncompleteExpressionException::what() const throw()
+{
+	return ("Error: not enough operators");
+}
+
+const char	*RPN::OverflowException::what() const throw()
+{
+	return ("Error: overflow");
+}
+
+const char	*RPN::UnderflowException::what() const throw()
+{
+	return ("Error: underflow");
 }
