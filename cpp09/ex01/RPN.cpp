@@ -88,6 +88,8 @@ void	RPN::div()
 	if (this->_stackRPN.size() < 2)
 		throw RPN::EmptyStackException();
 	int	a = this->_stackRPN.top();
+	if (a == 0)
+		throw RPN::DivideByZeroException();
 	this->pop();
 	int	b = this->_stackRPN.top();
 	this->pop();
@@ -158,4 +160,9 @@ const char	*RPN::EmptyStackException::what() const throw()
 const char	*RPN::InvalidExpressionException::what() const throw()
 {
 	return ("Error: invalid expression");
+}
+
+const char	*RPN::DivideByZeroException::what() const throw()
+{
+	return ("Error: can't divide by zero");
 }
